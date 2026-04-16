@@ -1,62 +1,128 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Task Manager - Clean Code</title>
-    <style>
-        .task-item { cursor: pointer; padding: 5px; }
-        .task-item:hover { color: red; text-decoration: line-through; }
-    </style>
+<meta charset="UTF-8">
+<title>To Do List Modern</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container */
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Area */
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+input:focus {
+    border-color: #4facfe;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background: #4facfe;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3a8dde;
+}
+
+/* List */
+ul {
+    list-style: none;
+    margin-top: 20px;
+    padding: 0;
+}
+
+li {
+    background: #f4f6f8;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    transition: 0.2s;
+}
+
+li:hover {
+    background: #ffe6e6;
+    color: red;
+    cursor: pointer;
+}
+</style>
+
 </head>
 <body>
 
-    <h2>Daftar Tugas Mandiri</h2>
-    <input type="text" id="taskInput" placeholder="Ketik tugas baru...">
-    <button id="addTaskBtn">Tambah Tugas</button>
-    
+<div class="container">
+    <h2>To Do List</h2>
+
+    <div class="input-group">
+        <input type="text" id="taskInput" placeholder="Tambah tugas...">
+        <button id="addBtn">Tambah</button>
+    </div>
+
     <ul id="taskList"></ul>
+</div>
 
-    <script>
-        /**
-         * Logika Aplikasi To-Do List
-         * Prinsip: Clean Code & Separation of Concerns
-         */
+<script>
+const input = document.getElementById("taskInput");
+const btn = document.getElementById("addBtn");
+const list = document.getElementById("taskList");
 
-        const taskInput = document.getElementById('taskInput');
-        const addTaskBtn = document.getElementById('addTaskBtn');
-        const taskList = document.getElementById('taskList');
+btn.addEventListener("click", () => {
+    const text = input.value.trim();
 
-        // Fungsi Utama untuk menangani input
-        const handleAddTask = () => {
-            const taskText = taskInput.value.trim();
-            
-            if (isValid(taskText)) {
-                createNewTaskElement(taskText);
-                clearInput();
-            } else {
-                alert("Input tidak boleh kosong!");
-            }
-        };
+    if (text === "") {
+        alert("Tidak boleh kosong!");
+        return;
+    }
 
-        // Fungsi Validasi (SRP)
-        const isValid = (text) => text.length > 0;
+    const li = document.createElement("li");
+    li.textContent = text;
 
-        // Fungsi DOM (SRP)
-        const createNewTaskElement = (text) => {
-            const li = document.createElement('li');
-            li.className = 'task-item';
-            li.textContent = text;
-            li.addEventListener('click', () => li.remove());
-            taskList.appendChild(li);
-        };
+    li.addEventListener("click", () => li.remove());
 
-        const clearInput = () => {
-            taskInput.value = '';
-            taskInput.focus();
-        };
+    list.appendChild(li);
+    input.value = "";
+});
+</script>
 
-        // Event Listeners
-        addTaskBtn.addEventListener('click', handleAddTask);
-    </script>
 </body>
 </html>

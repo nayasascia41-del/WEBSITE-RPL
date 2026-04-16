@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager - Clean Code</title>
+    <style>
+        .task-item { cursor: pointer; padding: 5px; }
+        .task-item:hover { color: red; text-decoration: line-through; }
+    </style>
+</head>
+<body>
+
+    <h2>Daftar Tugas Mandiri</h2>
+    <input type="text" id="taskInput" placeholder="Ketik tugas baru...">
+    <button id="addTaskBtn">Tambah Tugas</button>
+    
+    <ul id="taskList"></ul>
+
+    <script>
+        /**
+         * Logika Aplikasi To-Do List
+         * Prinsip: Clean Code & Separation of Concerns
+         */
+
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTaskBtn');
+        const taskList = document.getElementById('taskList');
+
+        // Fungsi Utama untuk menangani input
+        const handleAddTask = () => {
+            const taskText = taskInput.value.trim();
+            
+            if (isValid(taskText)) {
+                createNewTaskElement(taskText);
+                clearInput();
+            } else {
+                alert("Input tidak boleh kosong!");
+            }
+        };
+
+        // Fungsi Validasi (SRP)
+        const isValid = (text) => text.length > 0;
+
+        // Fungsi DOM (SRP)
+        const createNewTaskElement = (text) => {
+            const li = document.createElement('li');
+            li.className = 'task-item';
+            li.textContent = text;
+            li.addEventListener('click', () => li.remove());
+            taskList.appendChild(li);
+        };
+
+        const clearInput = () => {
+            taskInput.value = '';
+            taskInput.focus();
+        };
+
+        // Event Listeners
+        addTaskBtn.addEventListener('click', handleAddTask);
+    </script>
+</body>
+</html>

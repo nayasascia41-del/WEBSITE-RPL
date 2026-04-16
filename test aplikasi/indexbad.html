@@ -4,31 +4,35 @@
     <title>Aplikasi</title>
 </head>
 <body>
-    <input type="text" id="i1">
-    <button onclick="f()">Tambah</button>
-    <ul id="list"></ul>
 
-    <script>
-        // Fungsi ini melakukan terlalu banyak hal (SRP Violation)
-        // Menambah data, validasi, dan manipulasi DOM jadi satu
-        function f() {
-            var a = document.getElementById('i1').value;
-            
-            if (a == "") {
-                alert("Kosong!");
-            } else {
-                var li = document.createElement("li");
-                li.innerHTML = a;
-                
-                // Pengulangan kode manual (DRY Violation)
-                li.onclick = function() {
-                    this.parentNode.removeChild(this);
-                };
-                
-                document.getElementById('list').appendChild(li);
-                document.getElementById('i1').value = "";
-            }
-        }
-    </script>
+<h2>Daftar Tugas Mandiri</h2>
+
+<input type="text" id="i1">
+<button onclick="f()">Tambah</button>
+
+<ul id="list"></ul>
+
+<script>
+// Fungsi terlalu banyak tugas
+function f() {
+    var a = document.getElementById('i1').value;
+
+    if (a == "") {
+        alert("Kosong!");
+    } else {
+        var li = document.createElement("li");
+        li.innerHTML = a;
+
+        li.onclick = function() {
+            this.parentNode.removeChild(this);
+        };
+
+        document.getElementById('list').appendChild(li);
+
+        document.getElementById('i1').value = "";
+    }
+}
+</script>
+
 </body>
 </html>
